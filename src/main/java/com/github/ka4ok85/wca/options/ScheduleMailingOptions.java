@@ -100,12 +100,16 @@ public class ScheduleMailingOptions extends AbstractOptions {
 
     public void setScheduledByDateTime(String scheduled) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
-            LocalDateTime.parse(scheduled, formatter);
-            this.scheduled = scheduled;
-        } catch(DateTimeParseException e) {
+            if(checkDateTimeOfCorrectFormat(scheduled))
+                this.scheduled = scheduled;
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean checkDateTimeOfCorrectFormat(String dateTime) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+        return dateTime.equals(LocalDateTime.parse(dateTime, formatter).toString());
     }
 
     public int getScheduledInMinutes() {
