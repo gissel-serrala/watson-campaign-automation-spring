@@ -6,24 +6,33 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 public class ScheduleMailingOptions extends AbstractOptions {
+
+    public enum SendType {
+        TEXT, HTML
+    }
+
     private Visibility visibility;
     private String scheduled;
     private Long templateId;
     private Long listId;
     private String mailingName;
-    private boolean sendText;
+    private SendType sendType;
+    private String parentFolderPath;
     private int scheduleInMinutes = 2;
 
-    public ScheduleMailingOptions(Long templateId, Long listId, String mailingName){
+    public ScheduleMailingOptions(Long templateId, Long listId, String sendMailingPath, String mailingName, SendType sendType, String scheduledDateTime){
         this.templateId = templateId;
         this.listId = listId;
         this.mailingName = mailingName;
         this.visibility = Visibility.SHARED;
-        this.scheduled = getCurrentTimeStampPlusMinutes();
-        this.sendText = true;
+        this.parentFolderPath = sendMailingPath;
+        //this.scheduled = getCurrentTimeStampPlusMinutes();
+        this.scheduled = scheduledDateTime;
+        this.sendType = sendType;
     }
 
     public String getCurrentTimeStampPlusMinutes() {
@@ -38,14 +47,6 @@ public class ScheduleMailingOptions extends AbstractOptions {
 
     public void setVisibility(Visibility visibility) {
         this.visibility = visibility;
-    }
-
-    public String getScheduled() {
-        return scheduled;
-    }
-
-    public void setScheduled(String scheduled) {
-        this.scheduled = scheduled;
     }
 
     public Long getTemplateId() {
@@ -80,19 +81,41 @@ public class ScheduleMailingOptions extends AbstractOptions {
         this.mailingName = mailingName;
     }
 
-    public boolean isSendText() {
-        return sendText;
+    public SendType getSendType() {
+        return sendType;
     }
 
-    public void setSendText(boolean sendText) {
-        this.sendText = sendText;
+    public void setSendType(SendType sendType) {
+        this.sendType = sendType;
     }
 
-    public int getScheduleInMinutes() {
+    public String getParentFolderPath() {
+        return parentFolderPath;
+    }
+
+    public void setParentFolderPath(String parentFolderPath) {
+        this.parentFolderPath = parentFolderPath;
+    }
+
+    public String getScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduledByDateTime(String scheduled) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+            LocalDateTime.parse(scheduled, formatter);
+            this.scheduled = scheduled;
+        } catch(DateTimeParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getScheduledInMinutes() {
         return scheduleInMinutes;
     }
 
-    public void setScheduleInMinutes(int scheduleInMinutes) {
+    public void setScheduledInMinutes(int scheduleInMinutes) {
         this.scheduleInMinutes = scheduleInMinutes;
         this.scheduled = getCurrentTimeStampPlusMinutes();
     }

@@ -47,10 +47,12 @@ public class ScheduleMailingCommand extends AbstractInstantCommand<ScheduleMaili
         mailingName.setTextContent(options.getMailingName());
         addChildNode(mailingName, currentNode);
 
-        if (options.isSendText()) {
-            Element email = doc.createElement("SEND_TEXT");
-            addChildNode(email, currentNode);
-        }
+        Element email = doc.createElement(options.getSendType() == ScheduleMailingOptions.SendType.TEXT ? "SEND_TEXT" : "SEND_HTML");
+        addChildNode(email, currentNode);
+
+        Element parentFolderPath = doc.createElement("PARENT_FOLDER_PATH");
+        parentFolderPath.setTextContent(options.getParentFolderPath());
+        addChildNode(parentFolderPath, currentNode);
 
         Element visibility = doc.createElement("VISIBILITY");
         visibility.setTextContent(options.getVisibility().value().toString());
