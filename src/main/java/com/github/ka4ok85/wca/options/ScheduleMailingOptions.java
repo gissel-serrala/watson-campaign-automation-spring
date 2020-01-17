@@ -24,15 +24,12 @@ public class ScheduleMailingOptions extends AbstractOptions {
     private String parentFolderPath;
     private int scheduleInMinutes = 2;
 
-    public ScheduleMailingOptions(Long templateId, Long listId, String sendMailingPath, String mailingName, SendType sendType, String scheduledDateTime){
+    public ScheduleMailingOptions(Long templateId, Long listId, String mailingName){
         this.templateId = templateId;
         this.listId = listId;
         this.mailingName = mailingName;
         this.visibility = Visibility.SHARED;
-        this.parentFolderPath = sendMailingPath;
-        //this.scheduled = getCurrentTimeStampPlusMinutes();
-        this.scheduled = scheduledDateTime;
-        this.sendType = sendType;
+        this.scheduled = getCurrentTimeStampPlusMinutes();
     }
 
     public String getCurrentTimeStampPlusMinutes() {
