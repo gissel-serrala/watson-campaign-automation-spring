@@ -12,15 +12,44 @@
 
 #### Gradle
 ```groovy
-compile group: 'com.github.ka4ok85', name: 'watson-campaign-automation-spring', version: '0.0.3'
+compile group: 'com.github.gissel-serrala', name: 'watson-campaign-automation-spring', version: '0.0.5'
 ```
 
 #### Maven
 ```xml
+<repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+</repositories>
+
 <dependency>
-    <groupId>com.github.ka4ok85</groupId>
-    <artifactId>watson-campaign-automation-spring</artifactId>
-    <version>0.0.3</version>
+        <groupId>com.github.gissel-serrala</groupId>
+        <artifactId>watson-campaign-automation-spring</artifactId>
+        <version>0.0.5</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+<dependency>
+      <groupId>com.gissel.triggerdialog</groupId>
+            <artifactId>triggerdialog-campaign-automation-spring</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/watson-campaign-automation-spring.jar</systemPath>
 </dependency>
 ```
 
