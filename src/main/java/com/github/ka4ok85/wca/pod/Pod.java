@@ -4,36 +4,36 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Pod {
-	private static String ACCESS_URL = "https://apiPOD.silverpop.com/oauth/token";
-	private static String XML_API_URL = "https://apiPOD.silverpop.com/XMLAPI";
-	private static String SFTP_URL = "transferPOD.silverpop.com";
-	private static List<Integer> podList = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	private static String ACCESS_URL = "https://api-campaign-POD.goacoustic.com/oauth/token";
+	private static String XML_API_URL = "https://api-campaign-POD.goacoustic.com/XMLAPI";
+	private static String SFTP_URL = "transfer-campaign-POD.goacoustic.com";
+	private static List<String> podList = Arrays.asList("us-1", "us-2", "us-3", "us-4", "us-5", "eu-1", "ap-2", "ca-1", "us-6", "ap-1");
 
-	public static String getOAuthEndpoint(int podNumber) {
-		if (false == isValidPodNumber(podNumber)) {
-			throw new RuntimeException("Unsupported Pod Number");
+	public static String getOAuthEndpoint(String podLocation) {
+		if (false == isValidPodLocation(podLocation)) {
+			throw new RuntimeException("Unsupported Pod Location");
 		}
 
-		return ACCESS_URL.replaceAll("POD", String.valueOf(podNumber));
+		return ACCESS_URL.replaceAll("POD", podLocation);
 	}
 
-	public static String getXMLAPIEndpoint(int podNumber) {
-		if (false == isValidPodNumber(podNumber)) {
-			throw new RuntimeException("Unsupported Pod Number");
+	public static String getXMLAPIEndpoint(String podLocation) {
+		if (false == isValidPodLocation(podLocation)) {
+			throw new RuntimeException("Unsupported Pod Location");
 		}
 
-		return XML_API_URL.replaceAll("POD", String.valueOf(podNumber));
+		return XML_API_URL.replaceAll("POD", podLocation);
 	}
 
-	public static String getSFTPHostName(int podNumber) {
-		if (false == isValidPodNumber(podNumber)) {
-			throw new RuntimeException("Unsupported Pod Number");
+	public static String getSFTPHostName(String podLocation) {
+		if (false == isValidPodLocation(podLocation)) {
+			throw new RuntimeException("Unsupported Pod Location");
 		}
 
-		return SFTP_URL.replaceAll("POD", String.valueOf(podNumber));
+		return SFTP_URL.replaceAll("POD", podLocation);
 	}
 
-	private static boolean isValidPodNumber(int podNumber) {
-		return podList.contains(podNumber);
+	private static boolean isValidPodLocation(String podLocation) {
+		return podList.contains(podLocation);
 	}
 }

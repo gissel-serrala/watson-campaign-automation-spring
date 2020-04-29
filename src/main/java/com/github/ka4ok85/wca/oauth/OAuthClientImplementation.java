@@ -21,7 +21,7 @@ public class OAuthClientImplementation implements OAuthClient {
 
 	final String grantType = "refresh_token";
 
-	private int podNumber;
+	private String podLocation;
 	private String clientId;
 	private String clientSecret;
 	private String refreshToken;
@@ -31,12 +31,12 @@ public class OAuthClientImplementation implements OAuthClient {
 
 	private static final Logger log = LoggerFactory.getLogger(OAuthClientImplementation.class);
 
-	public OAuthClientImplementation(int podNumber, String clientId, String clientSecret, String refreshToken) {
-		this.podNumber = podNumber;
+	public OAuthClientImplementation(String podLocation, String clientId, String clientSecret, String refreshToken) {
+		this.podLocation = podLocation;
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.refreshToken = refreshToken;
-		this.accessUrl = Pod.getOAuthEndpoint(podNumber);
+		this.accessUrl = Pod.getOAuthEndpoint(podLocation);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class OAuthClientImplementation implements OAuthClient {
 		}
 	}
 
-	public int getPodNumber() {
-		return podNumber;
+	public String getPodNumber() {
+		return podLocation;
 	}
 
 }
